@@ -29,7 +29,7 @@ public class OrderController {
         response.put("timestamp", LocalDateTime.now().toString());
 
         try {
-            String inventoryServiceUrl = "http://localhost:8302/inventory/reserve";
+            String inventoryServiceUrl = "http://localhost:8200/inventory/reserve";
             ResponseEntity<String> inventoryResponse =
                     restTemplate.postForEntity(inventoryServiceUrl, orderRequest, String.class);
 
