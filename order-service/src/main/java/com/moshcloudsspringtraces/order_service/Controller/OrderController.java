@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -23,6 +25,7 @@ public class OrderController {
     public OrderController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
+
     @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> createOrder(@RequestBody Map<String, Object> orderRequest) {
         Map<String, Object> response = new HashMap<>();
@@ -30,8 +33,11 @@ public class OrderController {
 
         try {
             String inventoryServiceUrl = "http://localhost:8900/inventory/reserve";
-            ResponseEntity<String> inventoryResponse =
-                    restTemplate.postForEntity(inventoryServiceUrl, orderRequest, String.class);
+            ResponseEntity<String> inventoryResponse = restTemplate.postForEntity(inventoryServiceUrl, orderRequest,
+                    String.class);
+
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> inventoryResponseMap = mapper.readValue(inventoryResponse.getBody(), Map.class);
 
             String orderId = UUID.randomUUID().toString();
 
@@ -42,7 +48,7 @@ public class OrderController {
             Map<String, Object> data = new HashMap<>();
             data.put("orderId", orderId);
             data.put("service", "order-service");
-            data.put("inventoryResponse", inventoryResponse.getBody());
+              data.put("inventoryResponse", inventoryResponseMap);
             response.put("data", data);
 
             return ResponseEntity.ok(response);
