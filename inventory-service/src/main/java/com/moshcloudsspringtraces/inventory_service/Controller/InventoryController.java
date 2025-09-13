@@ -17,11 +17,6 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
-     private final RestTemplate restTemplate;
-
-    public InventoryController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
 
      @PostMapping("/reserve")
     public ResponseEntity<Map<String, Object>> reserveItems(@RequestBody Map<String, Object> inventoryRequest) {
