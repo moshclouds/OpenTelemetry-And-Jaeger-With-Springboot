@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @RestController
 @RequestMapping("/cart")
 public class CartController {
@@ -33,13 +35,16 @@ public class CartController {
             ResponseEntity<String> responseFromOrder = restTemplate.postForEntity(orderServiceUrl, cartRequest,
                     String.class);
 
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> orderResponseMap = mapper.readValue(responseFromOrder.getBody(), Map.class);
+
             response.put("status", HttpStatus.OK.value());
             response.put("code", HttpStatusCode.valueOf(200));
             response.put("message", "Checkout initiated");
 
             Map<String, Object> data = new HashMap<>();
             data.put("service", "cart-service");
-            data.put("orderResponse", responseFromOrder.getBody());
+             data.put("orderResponse", orderResponseMap);
             response.put("data", data);
 
             return ResponseEntity.ok(response);
