@@ -17,8 +17,7 @@ This repo contains several microservices + support infrastructure:
 - **api-gateway** — Entry point (REST API) routing to downstream services  
 - **inventory-service** — Handles inventory related operations  
 - **order-service** — Manages orders  
-- **cart-service** — Shopping cart logic  
-- (Possibly more, depending on the setup)  
+- **cart-service** — Shopping cart logic
 
 Plus:
 
@@ -93,7 +92,6 @@ Some key configuration items:
 
   * Ports for Jaeger UI (e.g. 16686)
   * Ports for OTLP / gRPC if needed
-  * Dependencies between services so they wait for registry/config server
 
 ---
 
