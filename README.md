@@ -4,7 +4,9 @@ This is a sample microservices setup demonstrating observability using **OpenTel
 
 The goal is to show how to enable tracing across multiple services, visualize those traces via Jaeger, and use Docker Compose for a quick local environment.
 
----
+
+<img width="4320" height="3360" alt="Image" src="https://github.com/user-attachments/assets/db8e7023-65cb-4e21-933b-03246114f0ed" />
+
 
 ## 🧩 Architecture & Components
 
